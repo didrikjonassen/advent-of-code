@@ -1,9 +1,9 @@
-package `3`
+package day3
 
 import java.io.File
 
 fun main(args: Array<String>) {
-    val input = Integer.parseInt(File ("src/3/SpiralMemoryInput.txt").readText())
+    val input = Integer.parseInt(File ("src/day3/SpiralMemoryInput.txt").readText())
     var layer = 1
     var bottomRight = 9
     while (bottomRight < input) {
