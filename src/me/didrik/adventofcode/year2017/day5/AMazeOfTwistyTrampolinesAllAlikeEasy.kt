@@ -1,9 +1,9 @@
-package day5
+package me.didrik.adventofcode.year2017.day5
 
 import java.io.File
 
 fun main(args: Array<String>) {
-    val offsets = File("src/day5/AMazeOfTwistyTrampolinesAllAlikeInput.txt").readLines().map { Integer.parseInt(it) }.toMutableList()
+    val offsets = File("src/me/didrik/adventofcode/year2017/day5/AMazeOfTwistyTrampolinesAllAlikeInput.txt").readLines().map { Integer.parseInt(it) }.toMutableList()
     var count = 0
     try {
         var pos = 0

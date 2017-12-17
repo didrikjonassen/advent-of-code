@@ -1,9 +1,9 @@
-package day1
+package me.didrik.adventofcode.year2017.day1
 
 import java.io.File
 
 fun main(args: Array<String>) {
-    val file = File("src/day1/InverseCaptchaInput.txt")
+    val file = File("src/me/didrik/adventofcode/year2017/day1/InverseCaptchaInput.txt")
     val input = file.readText()
     val extendedInput = input + input.toCharArray()[0]
     val integerArray = extendedInput.map { char -> Integer.parseInt(char.toString()) }
