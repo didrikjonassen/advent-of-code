@@ -10,17 +10,17 @@ fun main() {
     val visited = BooleanArray(input.size)
 
     while (true) {
-        val (a, b) = input[pos].split(" ")
-        when (a) {
-            "acc" -> { acc += b.toInt(); pos++; }
-            "jmp" -> pos += b.toInt()
-            "nop" -> pos++
-        }
         if (visited[pos]) {
             println(acc)
             break
         } else {
             visited[pos] = true
+            val (operation, value) = input[pos].split(" ")
+            when (operation) {
+                "acc" -> { acc += value.toInt(); pos++; }
+                "jmp" -> pos += value.toInt()
+                "nop" -> pos++
+            }
         }
     }
 }

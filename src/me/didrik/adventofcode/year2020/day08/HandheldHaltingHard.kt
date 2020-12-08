@@ -9,23 +9,17 @@ fun main() {
 
     outer@
     for (i in input.indices) {
-        val innerInput = file.readLines().toMutableList()
-        when (innerInput[i].split(" ")[0]) {
+        val instructions = file.readLines().toMutableList()
+        when (instructions[i].split(" ")[0]) {
             "acc" -> continue@outer
-            "jmp" -> innerInput[i] = innerInput[i].replace("jmp", "nop")
-            "nop" -> innerInput[i] = innerInput[i].replace("nop", "jmp")
+            "jmp" -> instructions[i] = instructions[i].replace("jmp", "nop")
+            "nop" -> instructions[i] = instructions[i].replace("nop", "jmp")
         }
         var acc = 0
         var pos = 0
         val visited = BooleanArray(input.size)
 
         while (true) {
-            val (a, b) = innerInput[pos].split(" ")
-            when (a) {
-                "acc" -> { acc += b.toInt(); pos++ }
-                "jmp" -> pos += b.toInt()
-                "nop" -> pos++
-            }
             if (pos == input.size) {
                 println(acc)
                 break@outer
@@ -33,6 +27,12 @@ fun main() {
                 continue@outer
             } else {
                 visited[pos] = true
+                val (operation, value) = instructions[pos].split(" ")
+                when (operation) {
+                    "acc" -> { acc += value.toInt(); pos++ }
+                    "jmp" -> pos += value.toInt()
+                    "nop" -> pos++
+                }
             }
         }
 
