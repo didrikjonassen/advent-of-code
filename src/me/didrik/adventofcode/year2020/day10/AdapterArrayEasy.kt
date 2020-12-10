@@ -5,13 +5,11 @@ import java.io.File
 fun main() {
     val file = File("src/me/didrik/adventofcode/year2020/day10/AdapterArrayInput.txt")
     val input = file.readLines().map { it.toInt() }.sorted()
-    val device = input.last() + 3
+    val currents = listOf(0) + input + (input.last() + 3)
     val diffs = IntArray(4)
-    diffs[input.first() - 0]++
-    for (i in 1 until input.size) {
-        diffs[input[i] - input[i - 1]]++
+    for (i in currents.subList(0, currents.size - 1).zip(currents.subList(1, currents.size))) {
+        diffs[i.second - i.first]++
     }
-    diffs[device-input.last()]++
-    println(diffs[1]*diffs[3])
+    println(diffs[1] * diffs[3])
 
 }
