@@ -12,36 +12,32 @@ fun main() {
     for (line in 1..y) {
         for (char in 1..x) {
             grid[0][line][char] = input[line-1][char-1]
+            grid[1][line][char] = input[line-1][char-1]
         }
     }
 
-    var generation = 0
-    while (!grid[0].contentDeepEquals(grid[1])) {
-        generation = (generation + 1) % 2
+    val directions = (-1..1).flatMap { i -> (-1..1).map { k -> Pair(i, k) } }
+            .filterNot { it.first == 0 && it.second == 0 }
+
+    var gen = 0
+    do {
+        gen = gen xor 1
         for (i in 1..y) {
             for (k in 1..x) {
-                if (grid[(generation + 1) % 2][i][k] == '.') {
-                    grid[generation][i][k] = '.'
-                    continue
-                }
-                val occupied = (-1..1).flatMap { i2 ->
-                    (-1..1).map { k2 ->
-                        Pair(i2, k2)
-                    }
-                }
-                        .filterNot { it.first == 0 && it.second == 0 }
-                        .map { grid[(generation + 1) % 2][i + it.first][k + it.second] }
+                if (grid[gen][i][k] == '.') continue
+                val occupied = directions
+                        .map { dir -> grid[gen xor 1][i + dir.first][k + dir.second] }
                         .filter { it == '#' }
                         .count()
                 when (occupied) {
-                    0 -> grid[generation][i][k] = '#'
-                    in 4..8 -> grid[generation][i][k] = 'L'
-                    else -> grid[generation][i][k] = grid[(generation + 1) % 2][i][k]
+                    0 -> grid[gen][i][k] = '#'
+                    in 4..8 -> grid[gen][i][k] = 'L'
+                    else -> grid[gen][i][k] = grid[gen xor 1][i][k]
                 }
             }
         }
-    }
-    val endOccupied = grid[generation].flatMap { it.asList() }
+    } while (!grid[0].contentDeepEquals(grid[1]))
+    val endOccupied = grid[gen].flatMap { it.asList() }
             .filter { it == '#' }
             .count()
 
