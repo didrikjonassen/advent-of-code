@@ -14,18 +14,17 @@ fun main() {
     var step = busses[0].second
     var nextBus = 1
     var timestamp = 0L
-    while (nextBus < busses.size) {
+    do {
+        timestamp += step
         if ((timestamp + busses[nextBus].first) % busses[nextBus].second == 0L) {
-            println(timestamp)
             step = lcm(step, busses[nextBus++].second)
-        } else {
-            timestamp += step
         }
-    }
+    } while (nextBus < busses.size)
     println(timestamp)
 
 
 }
-private fun lcm(a: Long, b: Long): Long {
-    return a * b / BigInteger.valueOf(a).gcd(BigInteger.valueOf(b)).toLong()
-}
+
+// Dividing by gcd not required since all input are prime
+private fun lcm(a: Long, b: Long) =
+        a * b / BigInteger.valueOf(a).gcd(BigInteger.valueOf(b)).toLong()
