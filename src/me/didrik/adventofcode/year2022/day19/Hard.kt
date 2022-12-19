@@ -1,5 +1,3 @@
-package me.didrik.adventofcode.year2022.day19
-
 import me.didrik.adventofcode.solve
 import java.io.File
 import kotlin.math.ceil
@@ -9,15 +7,15 @@ fun main() {
     val file = File("src/me/didrik/adventofcode/year2022/day19/Input.txt")
     val qualityLevel = file.readLines()
         .asSequence()
+        .take(3)
         .map { it.substringAfter(": ") }
         .map { it.split(" ").mapNotNull { it.toIntOrNull() } }
         .map { dfs(it, 0, 0, 0, 0, 1, 0, 0, 0, 0) }
-        .mapIndexed { index, geodes -> (index + 1) * geodes }
-        .sum()
+        .reduce(Math::multiplyExact)
     solve(qualityLevel)
 }
 
-private const val endTime = 24
+private const val endTime = 32
 
 private fun dfs(costs: List<Int>, ores: Int, clay: Int, obsidian: Int, geodes: Int, oreBots: Int, clayBots: Int, obsidianBots: Int, geodeBots: Int, minutes: Int): Int {
     if (minutes > endTime) {
